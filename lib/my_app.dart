@@ -9,19 +9,22 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => new _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   SongData songData;
   bool _isLoading = true;
+  TabController controller;
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
+    controller = new TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
     super.dispose();
+    controller.dispose();
     songData.audioPlayer.stop();
   }
 
@@ -50,6 +53,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return new MPInheritedWidget(songData, _isLoading, new RootPage());
+    return new MPInheritedWidget(songData, _isLoading, controller, new RootPage());
   }
 }

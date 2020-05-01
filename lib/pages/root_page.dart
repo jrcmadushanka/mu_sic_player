@@ -27,7 +27,12 @@ class RootPage extends StatelessWidget {
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Flutter Music Player"),
+        title: new Text("Mu Player"),
+        backgroundColor: Colors.black,
+        bottom: new TabBar(controller: rootIW.controller, tabs: <Tab>[
+          new Tab(icon: new Icon(Icons.music_note, color: Colors.purple)),
+          new Tab(icon: new Icon(Icons.library_music, color: Colors.purple))
+        ]),
         actions: <Widget>[
           new Container(
             padding: const EdgeInsets.all(20.0),
@@ -47,11 +52,21 @@ class RootPage extends StatelessWidget {
         ],
       ),
       // drawer: new MPDrawer(),
-      body: rootIW.isLoading
-          ? new Center(child: new CircularProgressIndicator())
-          : new Scrollbar(child: new MPListView()),
+      body:new TabBarView(
+        controller: rootIW.controller,
+        children: <Widget>[rootIW.isLoading
+            ? new Center(child: new CircularProgressIndicator())
+            : new Scrollbar(child: new MPListView()), rootIW.isLoading
+            ? new Center(child: new CircularProgressIndicator())
+            : new Scrollbar(child: new MPListView())],
+      ),
       floatingActionButton: new FloatingActionButton(
           child: new Icon(Icons.shuffle), onPressed: () => shuffleSongs()),
     );
   }
 }
+/*
+rootIW.isLoading
+? new Center(child: new CircularProgressIndicator())
+: new Scrollbar(child: new MPListView()),
+*/

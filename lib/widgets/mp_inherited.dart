@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class MPInheritedWidget extends InheritedWidget {
   final SongData songData;
   final bool isLoading;
+  final TabController controller;
 
-  const MPInheritedWidget(this.songData, this.isLoading, child)
+  const MPInheritedWidget(this.songData, this.isLoading, this.controller , child)
       : super(child: child);
 
   static MPInheritedWidget of(BuildContext context) {

@@ -13,7 +13,7 @@ void main() => runApp(new MaterialApp(
       loadingText: new Text("Mu Player",
           textScaleFactor: 3,
           style: TextStyle(fontFamily: "Ubuntu", color: Colors.purple)),
-      photoSize: 200.0,
+      photoSize: 300.0,
       navigateAfterSeconds: MyMaterialApp(),
     )));
 
@@ -27,8 +27,6 @@ class MyMaterialApp extends StatefulWidget {
 class MyMaterialAppState extends State<MyMaterialApp> {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-
-        debugShowCheckedModeBanner: false, theme: darkTheme, home: new MyApp());
+    return new MaterialApp(home: new MyApp());
   }
 }
