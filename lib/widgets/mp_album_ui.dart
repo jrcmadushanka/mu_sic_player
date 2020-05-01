@@ -54,7 +54,7 @@ class AlbumUIState extends State<AlbumUI> with SingleTickerProviderStateMixin {
                   gaplessPlayback: true,
                 )
               : new Image.asset(
-                  "assets/music_record.jpeg",
+                  "assets/music_record.png",
                   fit: BoxFit.cover,
                   height: 250.0,
                   gaplessPlayback: false,

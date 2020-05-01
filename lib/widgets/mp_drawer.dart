@@ -37,7 +37,7 @@ class MPDrawerState extends State<MPDrawer> {
                   gaplessPlayback: true,
                 )
               : new Image.asset(
-                  "assets/music_record.jpeg",
+                  "assets/music_record.png",
                   fit: BoxFit.fill,
                   scale: 5.0,
                   gaplessPlayback: true,
