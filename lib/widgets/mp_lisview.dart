@@ -3,6 +3,7 @@ import '../data/song_data.dart';
 import '../pages/now_playing.dart';
 import '../widgets/mp_circle_avatar.dart';
 import '../widgets/mp_inherited.dart';
+import '../utils/globals.dart' as globals;
 import 'package:flutter/material.dart';
 
 class MPListView extends StatelessWidget {
@@ -32,6 +33,7 @@ class MPListView extends StatelessWidget {
           ),
           onTap: () {
             songData.setCurrentIndex(index);
+            globals.currentSong = s;
             Navigator.push(
                 context,
                 new MaterialPageRoute(

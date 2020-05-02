@@ -1,8 +1,10 @@
+import 'package:Mu_Player/widgets/album_list.dart';
 import '../pages/now_playing.dart';
 import '../widgets/mp_inherited.dart';
 import '../widgets/mp_lisview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import '../utils//globals.dart' as globals;
 
 class RootPage extends StatelessWidget {
   @override
@@ -15,7 +17,7 @@ class RootPage extends StatelessWidget {
           new MaterialPageRoute(
               builder: (context) => new NowPlaying(
                     rootIW.songData,
-                    s,
+                    globals.currentSong,
                     nowPlayTap: nowPlayTap,
                   )));
     }
@@ -52,21 +54,19 @@ class RootPage extends StatelessWidget {
         ],
       ),
       // drawer: new MPDrawer(),
-      body:new TabBarView(
+      body: new TabBarView(
         controller: rootIW.controller,
-        children: <Widget>[rootIW.isLoading
-            ? new Center(child: new CircularProgressIndicator())
-            : new Scrollbar(child: new MPListView()), rootIW.isLoading
-            ? new Center(child: new CircularProgressIndicator())
-            : new Scrollbar(child: new MPListView())],
+        children: <Widget>[
+          rootIW.isLoading
+              ? new Center(child: new CircularProgressIndicator())
+              : new Scrollbar(child: new MPListView()),
+          rootIW.isLoading
+              ? new Center(child: new CircularProgressIndicator())
+              : new Scrollbar(child: new AlbumList())
+        ],
       ),
       floatingActionButton: new FloatingActionButton(
           child: new Icon(Icons.shuffle), onPressed: () => shuffleSongs()),
     );
   }
 }
-/*
-rootIW.isLoading
-? new Center(child: new CircularProgressIndicator())
-: new Scrollbar(child: new MPListView()),
-*/

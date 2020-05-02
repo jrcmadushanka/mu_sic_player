@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 import './my_app.dart';
-import './utils/themes.dart';
 
 void main() => runApp(new MaterialApp(
     home: new SplashScreen(
@@ -13,7 +12,7 @@ void main() => runApp(new MaterialApp(
       loadingText: new Text("Mu Player",
           textScaleFactor: 3,
           style: TextStyle(fontFamily: "Ubuntu", color: Colors.purple)),
-      photoSize: 300.0,
+      photoSize: 200.0,
       navigateAfterSeconds: MyMaterialApp(),
     )));
 

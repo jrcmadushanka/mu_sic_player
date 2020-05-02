@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:Mu_Player/widgets/mp_inherited.dart';
+
 import '../data/song_data.dart';
 import '../widgets/mp_album_ui.dart';
+import '../utils/globals.dart' as globals;
 import '../widgets/mp_blur_filter.dart';
 import '../widgets/mp_blur_widget.dart';
 import '../widgets/mp_control_button.dart';
@@ -10,11 +13,23 @@ import 'package:flute_music_player/flute_music_player.dart';
 
 enum PlayerState { stopped, playing, paused }
 
+// ignore: must_be_immutable
 class NowPlaying extends StatefulWidget {
-  final Song _song;
+  Song _song;
   final SongData songData;
   final bool nowPlayTap;
-  NowPlaying(this.songData, this._song, {this.nowPlayTap});
+
+  NowPlaying(this.songData, this._song, {this.nowPlayTap}){
+    if (this._song == null) {
+      if (globals.currentSong != null) {
+        this._song = globals.currentSong;
+      }
+      else {
+        print("gettig first");
+        this._song = globals.firstSong;
+      }
+    }
+  }
 
   @override
   _NowPlayingState createState() => new _NowPlayingState();
