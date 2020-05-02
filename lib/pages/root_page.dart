@@ -4,7 +4,7 @@ import '../widgets/mp_inherited.dart';
 import '../widgets/mp_lisview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
-import '../utils//globals.dart' as globals;
+import '../data/globals.dart' as globals;
 
 class RootPage extends StatelessWidget {
   @override

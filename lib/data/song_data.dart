@@ -1,6 +1,6 @@
 import 'package:Mu_Player/data/album.dart';
 import 'package:flute_music_player/flute_music_player.dart';
-import '../utils/globals.dart' as globals;
+import 'globals.dart' as globals;
 import 'dart:math';
 
 class SongData {

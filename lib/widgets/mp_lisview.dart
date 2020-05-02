@@ -1,9 +1,8 @@
 import 'dart:io';
 import '../data/song_data.dart';
 import '../pages/now_playing.dart';
-import '../widgets/mp_circle_avatar.dart';
 import '../widgets/mp_inherited.dart';
-import '../utils/globals.dart' as globals;
+import '../data/globals.dart' as globals;
 import 'package:flutter/material.dart';
 
 class MPListView extends StatelessWidget {
@@ -23,12 +22,27 @@ class MPListView extends StatelessWidget {
         return new ListTile(
           dense: false,
           leading: new Hero(
-            child: avatar(artFile, s.title, color),
+            child: new Material(
+              borderRadius: new BorderRadius.circular(20.0),
+              elevation: 3.0,
+              child: artFile != null
+                  ? new Image.file(
+                artFile,
+                fit: BoxFit.cover,
+              )
+                  : new CircleAvatar(
+                child: new Icon(
+                  Icons.music_note,
+                  color: Colors.white,
+                ),
+                backgroundColor: color,
+              ),
+            ),
             tag: s.title,
           ),
           title: new Text(s.title),
           subtitle: new Text(
-            "By ${s.artist}",
+            "${s.artist != '<unknown>' ? "by" + s.artist : ""}",
             style: Theme.of(context).textTheme.caption,
           ),
           onTap: () {

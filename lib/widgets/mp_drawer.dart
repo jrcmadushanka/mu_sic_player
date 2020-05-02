@@ -43,17 +43,6 @@ class MPDrawerState extends State<MPDrawer> {
                   gaplessPlayback: true,
                 ),
         ),
-        // new SwitchListTile(
-        //   title: new Text("Dark Theme"),
-        //   value: dark,
-        //   onChanged: (bool value) {
-        //     preferences.setBool("dark", value);
-        //     Scaffold.of(context).showSnackBar(new SnackBar(
-        //           content: new Text("Please restart to perform changes."),
-        //         ));
-        //     Navigator.pop(context);
-        //   },
-        // ),
       ],
     ));
   }

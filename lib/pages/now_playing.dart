@@ -4,7 +4,7 @@ import 'package:Mu_Player/widgets/mp_inherited.dart';
 
 import '../data/song_data.dart';
 import '../widgets/mp_album_ui.dart';
-import '../utils/globals.dart' as globals;
+import '../data/globals.dart' as globals;
 import '../widgets/mp_blur_filter.dart';
 import '../widgets/mp_blur_widget.dart';
 import '../widgets/mp_control_button.dart';

@@ -10,6 +10,7 @@ class MPInheritedWidget extends InheritedWidget {
       : super(child: child);
 
   static MPInheritedWidget of(BuildContext context) {
+    // ignore: deprecated_member_use
     return context.inheritFromWidgetOfExactType(MPInheritedWidget);
   }
 
