@@ -10,7 +10,9 @@ class Album{
   Album(this._name, this._albumArt, this._artist, this._id);
 
   void addSong(Song song){
-    _songs.add(song);
+    if (!_songs.contains(song)) {
+      _songs.add(song);
+    }
   }
 
   List<Song> getSongList(){
