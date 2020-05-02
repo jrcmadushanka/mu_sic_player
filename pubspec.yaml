@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   flute_music_player: ^0.0.6
   splashscreen: ^1.2.0
+  sqflite:
+  path:
 
 dev_dependencies:
   flutter_test:

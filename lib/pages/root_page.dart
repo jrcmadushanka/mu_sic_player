@@ -1,4 +1,6 @@
 import 'package:Mu_Player/widgets/album_list.dart';
+import 'package:Mu_Player/widgets/playlist_list.dart';
+import 'package:flutter/cupertino.dart';
 import '../pages/now_playing.dart';
 import '../widgets/mp_inherited.dart';
 import '../widgets/mp_lisview.dart';
@@ -10,6 +12,7 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rootIW = MPInheritedWidget.of(context);
+
     //Goto Now Playing Page
     void goToNowPlaying(Song s, {bool nowPlayTap: false}) {
       Navigator.push(
@@ -22,36 +25,24 @@ class RootPage extends StatelessWidget {
                   )));
     }
 
-    //Shuffle Songs and goto now playing page
-    void shuffleSongs() {
-      goToNowPlaying(rootIW.songData.randomSong);
-    }
-
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Mu Player"),
+        title: new Text(
+          "Mu Player",
+          style: TextStyle(color: Colors.purple),
+        ),
         backgroundColor: Colors.black,
         bottom: new TabBar(controller: rootIW.controller, tabs: <Tab>[
-          new Tab(icon: new Icon(Icons.music_note, color: Colors.purple)),
-          new Tab(icon: new Icon(Icons.library_music, color: Colors.purple))
+          new Tab(
+              icon: new Icon(Icons.music_note, color: Colors.purple),
+              child: new Text("Songs")),
+          new Tab(
+              icon: new Icon(Icons.library_music, color: Colors.purple),
+              child: new Text("Albums")),
+          new Tab(
+              icon: new Icon(Icons.queue_music, color: Colors.purple),
+              child: new Text("Playlists"))
         ]),
-        actions: <Widget>[
-          new Container(
-            padding: const EdgeInsets.all(20.0),
-            child: new Center(
-              child: new InkWell(
-                  child: new Text("Now Playing"),
-                  onTap: () => goToNowPlaying(
-                        rootIW.songData.songs[
-                            (rootIW.songData.currentIndex == null ||
-                                    rootIW.songData.currentIndex < 0)
-                                ? 0
-                                : rootIW.songData.currentIndex],
-                        nowPlayTap: true,
-                      )),
-            ),
-          )
-        ],
       ),
       // drawer: new MPDrawer(),
       body: new TabBarView(
@@ -62,11 +53,21 @@ class RootPage extends StatelessWidget {
               : new Scrollbar(child: new MPListView()),
           rootIW.isLoading
               ? new Center(child: new CircularProgressIndicator())
-              : new Scrollbar(child: new AlbumList())
+              : new Scrollbar(child: new AlbumList()),
+          rootIW.isLoading
+              ? new Center(child: new CircularProgressIndicator())
+              : new Scrollbar(child: new PlaylistList())
         ],
       ),
       floatingActionButton: new FloatingActionButton(
-          child: new Icon(Icons.shuffle), onPressed: () => shuffleSongs()),
+          child: new Icon(Icons.play_arrow), backgroundColor: Colors.purple,
+          onPressed: () => goToNowPlaying(
+                rootIW.songData.songs[(rootIW.songData.currentIndex == null ||
+                        rootIW.songData.currentIndex < 0)
+                    ? 0
+                    : rootIW.songData.currentIndex],
+                nowPlayTap: true,
+              )),
     );
   }
 }
