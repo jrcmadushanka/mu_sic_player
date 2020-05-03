@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flute_music_player/flute_music_player.dart';
+
 import '../models/Playlist.dart';
 import '../database/database_provider.dart';
 import '../data/album.dart';
@@ -10,43 +12,36 @@ import '../data/globals.dart' as globals;
 import 'package:flutter/material.dart';
 
 class PlaylistList extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return PlaylistItems();
   }
 }
 
-class PlaylistItems extends StatefulWidget{
+class PlaylistItems extends StatefulWidget {
   @override
   PlaylistItemsState createState() => PlaylistItemsState();
 }
 
-class PlaylistItemsState extends State<PlaylistItems>{
+class PlaylistItemsState extends State<PlaylistItems> {
   final List<MaterialColor> _colors = Colors.primaries;
   final _formKey = GlobalKey<FormState>();
   List<Playlist> playlistList;
 
- @override
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     print("Calling init");
     initPlatformState();
   }
 
-  _onBack() async {
-    initPlatformState();
-    print("Calling on back");
-  }
-
   initPlatformState() async {
     print("Getting songs ");
-    List<Playlist> list;
+    List<Playlist> list = [];
     try {
       list = await DataBaseProvider.db.getPlaylists();
     } catch (e) {
-      print("Failed to get albums: '${e.message}'.");
-      list = [];
+      print("Failed to get playlist: '${e.message}'.");
     }
 
     setState(() {
@@ -55,11 +50,9 @@ class PlaylistItemsState extends State<PlaylistItems>{
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     final rootIW = MPInheritedWidget.of(context);
-
     return Column(children: <Widget>[
       new InkWell(
           child: Row(
@@ -116,13 +109,14 @@ class PlaylistItemsState extends State<PlaylistItems>{
                                   onPressed: () {
                                     if (_formKey.currentState.validate()) {
                                       _formKey.currentState.save();
-                                      //Navigator.pop(context);
-                                      Navigator.of(context).push(
-                                          new MaterialPageRoute(
+                                      Navigator.pop(context);
+                                      Navigator.of(context)
+                                          .push(new MaterialPageRoute(
                                               builder: (_) =>
-                                              new CreatePlaylist(
-                                                  newPlaylistName,
-                                                  rootIW.songData))).then((val)=>{initPlatformState()});
+                                                  new CreatePlaylist(
+                                                      newPlaylistName,
+                                                      rootIW.songData)))
+                                          .then((val) => {initPlatformState()});
                                     }
                                   },
                                 ),
@@ -142,46 +136,101 @@ class PlaylistItemsState extends State<PlaylistItems>{
                   );
                 });
           }),
-      Expanded(
-          child: new ListView.builder(
-            shrinkWrap: true,
-            addRepaintBoundaries: true,
-            itemCount: playlistList.length,
-            itemBuilder: (context, int index) {
-              var album = playlistList[index];
-              final MaterialColor color = _colors[index % _colors.length];
-              return new ListTile(
-                dense: false,
-                leading: new Material(
-                    borderRadius: new BorderRadius.circular(20.0),
-                    elevation: 3.0,
-                    child:  new CircleAvatar(
-                      child: new Icon(
-                        Icons.library_music,
-                        color: Colors.white,
+      playlistList == null
+          ? new CircularProgressIndicator()
+          : Expanded(
+              child: new ListView.builder(
+              shrinkWrap: true,
+              addRepaintBoundaries: true,
+              itemCount: playlistList.length,
+              itemBuilder: (context, int index) {
+                var playlist = playlistList[index];
+                final MaterialColor color = _colors[index % _colors.length];
+                return new ListTile(
+                    dense: false,
+                    leading: new Material(
+                      borderRadius: new BorderRadius.circular(20.0),
+                      elevation: 3.0,
+                      child: new CircleAvatar(
+                        child: new Icon(
+                          Icons.queue_music,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: color,
                       ),
-                      backgroundColor: color,
                     ),
-                  ),
-                title: new Text(album.name),
-                subtitle: new Text(
-                  "${album.songs.length} Songs",
-                  style: Theme.of(context).textTheme.caption,
-                ),
-                onTap: () {
-                  //SongData songData = new SongData(album.songs);
-                  /*songData.setCurrentIndex(0);
-                  globals.currentSong = songData.songs[0];
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) =>
-                          new NowPlaying(songData, globals.currentSong)));*/
-                },
-              );
-            },
-          ))
+                    title: new Text(playlist.name),
+                    subtitle: new Text(
+                      "${playlist.songs.length} Songs",
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                    onTap: () {
+                      List<Song> songData = rootIW.songData.songs;
+                      List<Song> playlistSongs = [];
+                      songData.forEach((song) => {
+                        print(playlist.songs),
+                        print(song.uri),
+                            playlist.songs.contains(song.id)
+                                ? playlistSongs.add(song)
+                                : null
+                          });
+                      SongData data = new SongData(playlistSongs);
+                      data.setCurrentIndex(0);
+                      globals.currentSong = data.songs[0];
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) =>
+                                  new NowPlaying(data, globals.currentSong)));
+                    },
+                    trailing: PopupMenuButton<String>(
+                      onSelected: (String result) { setState(() {  }); },
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                        PopupMenuItem<String>(
+                          value: "edit",
+                          child: new Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                new CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    child: new Icon(
+                                      Icons.edit,
+                                      color: Colors.purple,
+                                    )),
+                                new Text(
+                                  "Edit Playlist",
+                                  style: TextStyle(fontSize: 20, color: Colors.purple),
+                                  textAlign: TextAlign.center,
+                                )
+                              ]),
+                        ),
+                        PopupMenuItem<String>(
+                          value: "delete",
+                          child:new Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                new CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    child: new Icon(
+                                      Icons.delete_sweep,
+                                      color: Colors.purple,
+                                    )),
+                                new Text(
+                                  "Delete Playlist",
+                                  style: TextStyle(fontSize: 20, color: Colors.purple),
+                                  textAlign: TextAlign.center,
+                                )
+                              ]),
+                        )
+                      ],
+                    )
+                );
+              },
+            ))
     ]);
   }
-
 }

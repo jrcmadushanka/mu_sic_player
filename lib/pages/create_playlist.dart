@@ -109,8 +109,10 @@ class SongListState extends State<SongList> {
   }
 
   void createPlayList() async {
+    print(selectedSongs);
     Playlist playlist =
         new Playlist(id: null, name: name, songs: selectedSongs);
+    print(playlist.songs);
     await DataBaseProvider.db.insert(playlist);
     Navigator.pop(context);
   }

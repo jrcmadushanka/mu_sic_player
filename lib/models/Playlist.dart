@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import '../database/database_provider.dart';
@@ -12,7 +13,7 @@ class Playlist {
   Map<String, dynamic> toMap(){
     var map = <String, dynamic> {
       DataBaseProvider.COLUMN_NAME: name,
-      DataBaseProvider.COLUMN_SONGS: Uint8List.fromList(songs),
+      DataBaseProvider.COLUMN_SONGS: songs.join(','),
     };
 
     if (id != null) {
@@ -24,6 +25,11 @@ class Playlist {
   Playlist.fromMap( Map<String, dynamic> map){
     id = map[DataBaseProvider.COLUMN_ID];
     name = map[DataBaseProvider.COLUMN_NAME];
-    songs = new List.from(map[DataBaseProvider.COLUMN_SONGS]);
+    List<String> idStrings = map[DataBaseProvider.COLUMN_SONGS].split(",");
+    List<int> ids = [];
+    idStrings.forEach((sid) => {
+      ids.add(int.tryParse(sid))
+    });
+    songs = ids;
   }
 }
