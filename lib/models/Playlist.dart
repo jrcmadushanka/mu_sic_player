@@ -24,6 +24,6 @@ class Playlist {
   Playlist.fromMap( Map<String, dynamic> map){
     id = map[DataBaseProvider.COLUMN_ID];
     name = map[DataBaseProvider.COLUMN_NAME];
-    songs = new List.from(map[DataBaseProvider.COLUMN_ID]);
+    songs = new List.from(map[DataBaseProvider.COLUMN_SONGS]);
   }
 }
