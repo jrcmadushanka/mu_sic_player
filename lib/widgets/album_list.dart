@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:Mu_Player/data/album.dart';
-import 'package:Mu_Player/pages/now_playing.dart';
+import '../data/album.dart';
+import '../pages/now_playing.dart';
 import '../data/song_data.dart';
 import '../widgets/mp_inherited.dart';
 import '../data/globals.dart' as globals;

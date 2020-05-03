@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:Mu_Player/widgets/mp_inherited.dart';
 
 import '../data/song_data.dart';
 import '../widgets/mp_album_ui.dart';

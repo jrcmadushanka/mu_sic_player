@@ -1,5 +1,4 @@
-import 'package:Mu_Player/models/Playlist.dart';
-import 'package:flutter/cupertino.dart';
+import '../models/Playlist.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
@@ -7,10 +6,11 @@ import 'dart:async';
 class DataBaseProvider {
 
   static const String DATABASE = "mu_player.db";
-  static const String TABLE_PLAYLIST = "playlist";
+  static const String TABLE_PLAYLIST = "playlists";
   static const String COLUMN_ID = "id";
   static const String COLUMN_NAME = "name";
   static const String COLUMN_SONGS = "songs";
+  static final DataBaseProvider db = DataBaseProvider._();
 
   DataBaseProvider._();
 

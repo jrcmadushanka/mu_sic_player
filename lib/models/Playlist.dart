@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:Mu_Player/database/database_provider.dart';
+import '../database/database_provider.dart';
 
 class Playlist {
    int id;

@@ -1,5 +1,5 @@
-import 'package:Mu_Player/widgets/album_list.dart';
-import 'package:Mu_Player/widgets/playlist_list.dart';
+import '../widgets/album_list.dart';
+import '../widgets/playlist_list.dart';
 import 'package:flutter/cupertino.dart';
 import '../pages/now_playing.dart';
 import '../widgets/mp_inherited.dart';

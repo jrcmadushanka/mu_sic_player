@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:Mu_Player/data/album.dart';
-import 'package:Mu_Player/pages/create_playlist.dart';
-import 'package:Mu_Player/pages/now_playing.dart';
+import '../data/album.dart';
+import '../pages/create_playlist.dart';
+import '../pages/now_playing.dart';
 import '../data/song_data.dart';
 import '../widgets/mp_inherited.dart';
 import '../data/globals.dart' as globals;
@@ -72,10 +72,14 @@ class PlaylistList extends StatelessWidget {
                                   onPressed: () {
                                     if (_formKey.currentState.validate()) {
                                       _formKey.currentState.save();
+                                      Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(
-                                              builder: (context) => new CreatePlaylist(newPlaylistName)));
+                                              builder: (context) =>
+                                                  new CreatePlaylist(
+                                                      newPlaylistName,
+                                                      rootIW.songData)));
                                     }
                                   },
                                 ),
@@ -95,8 +99,10 @@ class PlaylistList extends StatelessWidget {
                   );
                 });
           }),
-      new ListView.builder(
+      Expanded(
+          child: new ListView.builder(
         shrinkWrap: true,
+        addRepaintBoundaries: true,
         itemCount: albums.length,
         itemBuilder: (context, int index) {
           var album = albums[index];
@@ -143,7 +149,7 @@ class PlaylistList extends StatelessWidget {
             },
           );
         },
-      )
+      ))
     ]);
   }
 }
