@@ -4,6 +4,7 @@ import '../widgets/mp_inherited.dart';
 import '../widgets/mp_lisview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import './main_drawer.dart';
 import '../data/globals.dart' as globals;
 
 class RootPage extends StatelessWidget {
@@ -21,6 +22,8 @@ class RootPage extends StatelessWidget {
                     nowPlayTap: nowPlayTap,
                   )));
     }
+
+
 
     //Shuffle Songs and goto now playing page
     void shuffleSongs() {
@@ -53,6 +56,8 @@ class RootPage extends StatelessWidget {
           )
         ],
       ),
+      drawer: MainDrawer(),
+
       // drawer: new MPDrawer(),
       body: new TabBarView(
         controller: rootIW.controller,
