@@ -4,19 +4,6 @@ import '../database/database_provider.dart';
 import '../data/song_data.dart';
 import 'package:flutter/material.dart';
 
-class CreatePlaylist extends StatelessWidget {
-  final String name;
-  final SongData songData;
-  final Playlist playlist;
-
-  CreatePlaylist(this.name, this.songData, this.playlist);
-
-  @override
-  Widget build(BuildContext context) {
-    return SongList(name, songData, playlist);
-  }
-}
-
 class SongList extends StatefulWidget {
   final String name;
   final SongData songData;

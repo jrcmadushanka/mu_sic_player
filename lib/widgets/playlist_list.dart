@@ -111,7 +111,7 @@ class PlaylistItemsState extends State<PlaylistItems> {
                                       Navigator.of(context)
                                           .push(new MaterialPageRoute(
                                               builder: (_) =>
-                                                  new CreatePlaylist(
+                                                  new SongList(
                                                       newPlaylistName,
                                                       rootIW.songData, null)))
                                           .then((val) => {initPlatformState()});
@@ -242,7 +242,7 @@ class PlaylistItemsState extends State<PlaylistItems> {
     } else {
       Navigator.of(context).push(new MaterialPageRoute(
           builder: (_) =>
-              new CreatePlaylist(null, rootIW.songData, playList))).
+              new SongList(null, rootIW.songData, playList))).
       then((val) => {initPlatformState()});
     }
     initPlatformState();
