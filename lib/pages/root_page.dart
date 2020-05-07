@@ -3,7 +3,7 @@ import '../widgets/playlist_list.dart';
 import 'package:flutter/cupertino.dart';
 import '../pages/now_playing.dart';
 import '../widgets/mp_inherited.dart';
-import '../widgets/mp_lisview.dart';
+import '../widgets/song_list.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import '../data/globals.dart' as globals;
@@ -50,7 +50,7 @@ class RootPage extends StatelessWidget {
         children: <Widget>[
           rootIW.isLoading
               ? new Center(child: new CircularProgressIndicator())
-              : new Scrollbar(child: new MPListView()),
+              : new Scrollbar(child: new SongListView()),
           rootIW.isLoading
               ? new Center(child: new CircularProgressIndicator())
               : new Scrollbar(child: new AlbumList()),
