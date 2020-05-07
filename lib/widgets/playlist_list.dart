@@ -27,6 +27,7 @@ class PlaylistItemsState extends State<PlaylistItems> {
   final List<MaterialColor> _colors = Colors.primaries;
   final _formKey = GlobalKey<FormState>();
   List<Playlist> playlistList;
+  MPInheritedWidget rootIW;
 
   @override
   void initState() {
@@ -46,13 +47,12 @@ class PlaylistItemsState extends State<PlaylistItems> {
 
     setState(() {
       playlistList = list;
-      print(list);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final rootIW = MPInheritedWidget.of(context);
+    rootIW = MPInheritedWidget.of(context);
     return Column(children: <Widget>[
       new InkWell(
           child: Row(
@@ -115,7 +115,7 @@ class PlaylistItemsState extends State<PlaylistItems> {
                                               builder: (_) =>
                                                   new CreatePlaylist(
                                                       newPlaylistName,
-                                                      rootIW.songData)))
+                                                      rootIW.songData, null)))
                                           .then((val) => {initPlatformState()});
                                     }
                                   },
@@ -168,8 +168,8 @@ class PlaylistItemsState extends State<PlaylistItems> {
                       List<Song> songData = rootIW.songData.songs;
                       List<Song> playlistSongs = [];
                       songData.forEach((song) => {
-                        print(playlist.songs),
-                        print(song.uri),
+                            print(playlist.songs),
+                            print(song.uri),
                             playlist.songs.contains(song.id)
                                 ? playlistSongs.add(song)
                                 : null
@@ -184,8 +184,11 @@ class PlaylistItemsState extends State<PlaylistItems> {
                                   new NowPlaying(data, globals.currentSong)));
                     },
                     trailing: PopupMenuButton<String>(
-                      onSelected: (String result) { setState(() {  }); },
-                      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                      onSelected: (String result) {
+                        popupAction(playlist, result);
+                      },
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<String>>[
                         PopupMenuItem<String>(
                           value: "edit",
                           child: new Row(
@@ -201,14 +204,15 @@ class PlaylistItemsState extends State<PlaylistItems> {
                                     )),
                                 new Text(
                                   "Edit Playlist",
-                                  style: TextStyle(fontSize: 20, color: Colors.purple),
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.purple),
                                   textAlign: TextAlign.center,
                                 )
                               ]),
                         ),
                         PopupMenuItem<String>(
                           value: "delete",
-                          child:new Row(
+                          child: new Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -221,16 +225,28 @@ class PlaylistItemsState extends State<PlaylistItems> {
                                     )),
                                 new Text(
                                   "Delete Playlist",
-                                  style: TextStyle(fontSize: 20, color: Colors.purple),
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.purple),
                                   textAlign: TextAlign.center,
                                 )
                               ]),
                         )
                       ],
-                    )
-                );
+                    ));
               },
             ))
     ]);
+  }
+
+  void popupAction(Playlist playList, String action) {
+    if (action == 'delete') {
+      DataBaseProvider.db.deletePlaylist(playList.id);
+    } else {
+      Navigator.of(context).push(new MaterialPageRoute(
+          builder: (_) =>
+              new CreatePlaylist(null, rootIW.songData, playList))).
+      then((val) => {initPlatformState()});
+    }
+    initPlatformState();
   }
 }

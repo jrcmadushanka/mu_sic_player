@@ -7,36 +7,44 @@ import 'package:flutter/material.dart';
 class CreatePlaylist extends StatelessWidget {
   final String name;
   final SongData songData;
+  final Playlist playlist;
 
-  CreatePlaylist(this.name, this.songData);
+  CreatePlaylist(this.name, this.songData, this.playlist);
 
   @override
   Widget build(BuildContext context) {
-    return SongList(name, songData);
+    return SongList(name, songData, playlist);
   }
 }
 
 class SongList extends StatefulWidget {
   final String name;
   final SongData songData;
+  final Playlist playlist;
 
-  SongList(this.name, this.songData);
+  SongList(this.name, this.songData, this.playlist);
 
   @override
-  SongListState createState() => SongListState(name, songData);
+  SongListState createState() =>
+      SongListState(name, songData, playlist);
 }
 
 class SongListState extends State<SongList> {
   final String name;
   final SongData songData;
   final List<MaterialColor> _colors = Colors.primaries;
-  final List<int> selectedSongs = [];
+  final Playlist playlist;
+  List<int> selectedSongs = [];
 
-  SongListState(this.name, this.songData);
+  SongListState(this.name, this.songData, this.playlist);
 
   @override
   void initState() {
     super.initState();
+
+    if (playlist != null) {
+      selectedSongs = playlist.songs;
+    }
   }
 
   @override
@@ -109,11 +117,15 @@ class SongListState extends State<SongList> {
   }
 
   void createPlayList() async {
-    print(selectedSongs);
-    Playlist playlist =
-        new Playlist(id: null, name: name, songs: selectedSongs);
-    print(playlist.songs);
-    await DataBaseProvider.db.insert(playlist);
+    if (playlist != null) {
+      playlist.songs = selectedSongs;
+      await DataBaseProvider.db.updatePlaylist(playlist);
+    } else {
+      Playlist playlist =
+      new Playlist(id: null, name: name, songs: selectedSongs);
+
+      await DataBaseProvider.db.insertPlaylist(playlist);
+    }
     Navigator.pop(context);
   }
 }
