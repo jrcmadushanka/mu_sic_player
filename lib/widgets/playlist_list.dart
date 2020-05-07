@@ -1,9 +1,6 @@
-import 'dart:io';
 import 'package:flute_music_player/flute_music_player.dart';
-
 import '../models/Playlist.dart';
 import '../database/database_provider.dart';
-import '../data/album.dart';
 import '../pages/create_playlist.dart';
 import '../pages/now_playing.dart';
 import '../data/song_data.dart';
@@ -53,24 +50,25 @@ class PlaylistItemsState extends State<PlaylistItems> {
   @override
   Widget build(BuildContext context) {
     rootIW = MPInheritedWidget.of(context);
-    return Column(children: <Widget>[
+    return Column(
+        children: <Widget>[
       new InkWell(
           child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                new CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: new Icon(
-                      Icons.queue,
-                      color: Colors.purple,
-                    )),
                 new Text(
                   "Create a Playlist",
                   style: TextStyle(fontSize: 20, color: Colors.purple),
                   textAlign: TextAlign.center,
-                )
+                ),
+                new CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: new Icon(
+                      Icons.playlist_add,
+                      color: Colors.purple,
+                    ))
               ]),
           onTap: () {
             var newPlaylistName = "";

@@ -17,7 +17,7 @@ class DataBaseProvider {
     return openDatabase(join(await getDatabasesPath(), DATABASE),
         onCreate: (db, version) {
       return db.execute(
-        "CREATE TABLE playlists(id INTEGER PRIMARY KEY, name TEXT, songs BLOB)",
+        "CREATE TABLE playlists(id INTEGER PRIMARY KEY, name TEXT, songs String)",
       );
     }, version: 1);
   }

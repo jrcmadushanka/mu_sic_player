@@ -29,6 +29,7 @@ class MPListView extends StatelessWidget {
                   ? new Image.file(
                 artFile,
                 fit: BoxFit.cover,
+                width: 40,
               )
                   : new CircleAvatar(
                 child: new Icon(

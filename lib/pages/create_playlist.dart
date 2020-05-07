@@ -25,8 +25,7 @@ class SongList extends StatefulWidget {
   SongList(this.name, this.songData, this.playlist);
 
   @override
-  SongListState createState() =>
-      SongListState(name, songData, playlist);
+  SongListState createState() => SongListState(name, songData, playlist);
 }
 
 class SongListState extends State<SongList> {
@@ -64,54 +63,54 @@ class SongListState extends State<SongList> {
         ),
         body: Material(
             child: new ListView.builder(
-          itemCount: songData.songs.length,
-          itemBuilder: (context, int index) {
-            var s = songData.songs[index];
-            final MaterialColor color = _colors[index % _colors.length];
-            var artFile = s.albumArt == null
-                ? null
-                : new File.fromUri(Uri.parse(s.albumArt));
+            itemCount: songData.songs.length,
+            itemBuilder: (context, int index) {
+              var s = songData.songs[index];
+              final MaterialColor color = _colors[index % _colors.length];
+              var artFile = s.albumArt == null
+                  ? null
+                  : new File.fromUri(Uri.parse(s.albumArt));
 
             return new ListTileTheme(
+                dense: false,
                 child: new ListTile(
-              dense: false,
-              leading: new Material(
-                borderRadius: new BorderRadius.circular(20.0),
-                elevation: 3.0,
-                child: artFile != null
-                    ? new Image.file(
-                        artFile,
-                        fit: BoxFit.cover,
-                      )
-                    : new CircleAvatar(
-                        child: new Icon(
-                          Icons.music_note,
-                          color: Colors.white,
-                        ),
-                        backgroundColor: color,
-                      ),
-              ),
-              title: new Text(s.title),
-              subtitle: new Text(
-                "${s.artist != '<unknown>' ? "by" + s.artist : ""}",
-                style: Theme.of(context).textTheme.caption,
-              ),
-              trailing: selectedSongs.contains(s.id)
-                  ? Icon(
-                      Icons.check_circle,
-                      color: Colors.lightGreen,
-                    )
-                  : Icon(Icons.check_circle),
-              onTap: () {
-                setState(() {
-                  if (selectedSongs.contains(s.id)) {
-                    selectedSongs.remove(s.id);
-                  } else {
-                    selectedSongs.add(s.id);
-                  }
-                });
-              },
-            ));
+                  leading: new Material(
+                    borderRadius: new BorderRadius.circular(20.0),
+                    elevation: 3.0,
+                    child: artFile != null
+                        ? new Image.file(
+                            artFile,
+                            fit: BoxFit.cover,
+                          )
+                        : new CircleAvatar(
+                            child: new Icon(
+                              Icons.music_note,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: color,
+                          ),
+                  ),
+                  title: new Text(s.title),
+                  subtitle: new Text(
+                    "${s.artist != '<unknown>' ? "by" + s.artist : ""}",
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                  trailing: selectedSongs.contains(s.id)
+                      ? Icon(
+                          Icons.check_circle,
+                          color: Colors.lightGreen,
+                        )
+                      : Icon(Icons.check_circle),
+                  onTap: () {
+                    setState(() {
+                      if (selectedSongs.contains(s.id)) {
+                        selectedSongs.remove(s.id);
+                      } else {
+                        selectedSongs.add(s.id);
+                      }
+                    });
+                  },
+                ));
           },
         )));
   }
@@ -122,7 +121,7 @@ class SongListState extends State<SongList> {
       await DataBaseProvider.db.updatePlaylist(playlist);
     } else {
       Playlist playlist =
-      new Playlist(id: null, name: name, songs: selectedSongs);
+          new Playlist(id: null, name: name, songs: selectedSongs);
 
       await DataBaseProvider.db.insertPlaylist(playlist);
     }
