@@ -1,5 +1,6 @@
 import './data/song_data.dart';
 import './pages/root_page.dart';
+import './pages/favourites.dart';
 import './widgets/mp_inherited.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
@@ -55,4 +56,5 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new MPInheritedWidget(songData, _isLoading, controller, new RootPage());
   }
+
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
-
+import '../database/Fav_db.dart';
+import '../models/Fav_model.dart';
 import '../data/song_data.dart';
 import '../widgets/mp_album_ui.dart';
 import '../data/globals.dart' as globals;
@@ -9,6 +10,7 @@ import '../widgets/mp_blur_widget.dart';
 import '../widgets/mp_control_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
+import '../database/database_provider.dart';
 
 enum PlayerState { stopped, playing, paused }
 
@@ -236,6 +238,16 @@ class _NowPlayingState extends State<NowPlaying> {
           ),
         ]);
 
+    Future<void> addFavourite () async {
+      var favSong = Fav_model();
+      favSong.id = song.id;
+      favSong.song_id = song.id;
+      await FavouriteDB.db.insertFav(favSong) ;
+
+      print(await FavouriteDB.db.songs());
+
+    }
+
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Now Playing"),
@@ -248,6 +260,12 @@ class _NowPlayingState extends State<NowPlaying> {
           children: <Widget>[blurWidget(song), blurFilter(), playerUI],
         ),
       ),
+      floatingActionButton: new FloatingActionButton(
+          child: new Icon(Icons.favorite), backgroundColor: Colors.red,
+          onPressed: () => {
+              addFavourite()
+          },
+      )
     );
   }
 }

@@ -2,18 +2,25 @@ import '../widgets/album_list.dart';
 import '../widgets/playlist_list.dart';
 import 'package:flutter/cupertino.dart';
 import '../pages/now_playing.dart';
+import '../data/song_data.dart';
 import '../widgets/mp_inherited.dart';
 import '../widgets/mp_lisview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import './main_drawer.dart';
+import '../database/Fav_db.dart';
+import '../models/Fav_model.dart';
 import '../data/globals.dart' as globals;
 
 class RootPage extends StatelessWidget {
+
+  List<Song> FavSongs;
+  List<Fav_model> favList;
+  List<int> SongIDS;
   @override
   Widget build(BuildContext context) {
     final rootIW = MPInheritedWidget.of(context);
-
+    SongData data = rootIW.songData;
     //Goto Now Playing Page
     void goToNowPlaying(Song s, {bool nowPlayTap: false}) {
       Navigator.push(
@@ -25,6 +32,41 @@ class RootPage extends StatelessWidget {
                     nowPlayTap: nowPlayTap,
                   )));
     }
+
+
+
+      Future<void> FavoriteList () async {
+        favList = await FavouriteDB.db.songs();
+       //for ( var i in favList ){SongIDS.add(i.id);}
+       // print(SongIDS);
+        //print(favList);
+
+        var xx = [];
+        favList.forEach((element) =>
+            xx.add(element.song_id)
+        );
+
+
+
+
+        List<Song> songData = rootIW.songData.songs;
+        FavSongs = [];
+        songData.forEach((song) => {
+          //print(favList),
+         // print(song.uri),
+        if(xx.contains(song.id))
+          {
+            FavSongs.add(song)
+          }
+
+        });
+        print(FavSongs);
+        data = new SongData(FavSongs);
+      }
+    FavoriteList();
+
+
+
 
     return new Scaffold(
       appBar: new AppBar(
@@ -45,7 +87,7 @@ class RootPage extends StatelessWidget {
               child: new Text("Playlists"))
         ]),
       ),
-      drawer: MainDrawer(),
+      drawer: MainDrawer(data),
 
       // drawer: new MPDrawer(),
       body: new TabBarView(

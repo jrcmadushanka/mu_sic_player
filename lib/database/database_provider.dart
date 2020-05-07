@@ -1,3 +1,7 @@
+
+
+import 'package:mu_player/models/Fav_model.dart';
+
 import '../models/Playlist.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -17,10 +21,15 @@ class DataBaseProvider {
     return openDatabase(join(await getDatabasesPath(), DATABASE),
         onCreate: (db, version) {
       return db.execute(
-        "CREATE TABLE playlists(id INTEGER PRIMARY KEY, name TEXT, songs BLOB)",
+        "CREATE TABLE playlists(id INTEGER PRIMARY KEY, name TEXT, songs BLOB)" ,
+
       );
+
     }, version: 1);
   }
+
+
+
 
   Future<List<Playlist>> getPlaylists() async {
     final db = await database;
@@ -57,4 +66,7 @@ class DataBaseProvider {
       whereArgs: [playlist.id],
     );
   }
+
+
+
 }

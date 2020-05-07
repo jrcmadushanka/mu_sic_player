@@ -1,7 +1,18 @@
+
+import 'package:flute_music_player/flute_music_player.dart';
+import 'package:mu_player/data/song_data.dart';
+import '../database/Fav_db.dart';
+import '../models/Fav_model.dart';
+import '../pages/favourites.dart';
 import 'package:flutter/material.dart';
-import './favourites.dart';
+import '../models/Playlist.dart';
 
 class MainDrawer extends StatelessWidget {
+  final SongData songData;
+
+   MainDrawer(this.songData);
+
+
   @override
   Widget build(BuildContext context){
     return Drawer(
@@ -49,11 +60,11 @@ class MainDrawer extends StatelessWidget {
                 fontSize: 20
               ),
             ),
-            onTap: () {
+            onTap: ()  {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Favourites(),
+                  builder: (context) => Favourites(songData),
                 ));
             },
           ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flute_music_player/flute_music_player.dart';
+import 'package:mu_player/pages/root_page.dart';
 
 import '../models/Playlist.dart';
 import '../database/database_provider.dart';
@@ -11,12 +12,13 @@ import '../widgets/mp_inherited.dart';
 import '../data/globals.dart' as globals;
 import 'package:flutter/material.dart';
 
-class PlaylistList extends StatelessWidget {
+class PlaylistList extends RootPage {
   @override
   Widget build(BuildContext context) {
     return PlaylistItems();
   }
 }
+
 
 class PlaylistItems extends StatefulWidget {
   @override
