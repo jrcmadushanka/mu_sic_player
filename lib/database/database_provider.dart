@@ -1,12 +1,13 @@
+// Student ID : IT17037266
+// Name : J.R.C. Madushanka
+//Data base provider to initiate the sqflite database connection and perform
+// data base functionalities.
+
 import '../models/Playlist.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 
-/*
-*  Data base provider to initiate the sqflite database connection and perform
-* data base functionalities.
-* */
 class DataBaseProvider {
   static const String DATABASE = "mu_player.db"; // Database name for the app
   static const String TABLE_PLAYLIST =

@@ -1,5 +1,7 @@
+// Student ID : IT17037266
+// Name : J.R.C. Madushanka
+//Database model for playlists
 import '../database/database_provider.dart';
-// Database model for playlists
 
 class Playlist {
    int id; // Playlist id

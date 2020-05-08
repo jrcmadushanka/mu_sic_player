@@ -1,5 +1,8 @@
-import 'package:flute_music_player/flute_music_player.dart';
+// Student ID : IT17037266
+// Name : J.R.C. Madushanka
 // Data model for Albums. This contains mapped album data from the song data
+
+import 'package:flute_music_player/flute_music_player.dart';
 
 class Album{
   var _id; // Album id

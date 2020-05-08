@@ -1,3 +1,6 @@
+// Student ID : IT17037266
+// Name : J.R.C. Madushanka
+// List all the albums
 import 'dart:io';
 import '../data/album.dart';
 import '../pages/now_playing.dart';

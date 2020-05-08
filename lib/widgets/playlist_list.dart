@@ -1,3 +1,7 @@
+// Student ID : IT17037266
+// Name : J.R.C. Madushanka
+// List all the playlists
+
 import 'package:flute_music_player/flute_music_player.dart';
 import '../models/Playlist.dart';
 import '../database/database_provider.dart';

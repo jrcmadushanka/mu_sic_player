@@ -1,3 +1,7 @@
+// Student ID : IT17037266
+// Name : J.R.C. Madushanka
+// Root page with tab view
+
 import '../widgets/album_list.dart';
 import '../widgets/playlist_list.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,6 +36,7 @@ class RootPage extends StatelessWidget {
           style: TextStyle(color: Colors.purple),
         ),
         backgroundColor: Colors.black,
+        // Initializing Tab bar
         bottom: new TabBar(controller: rootIW.controller, tabs: <Tab>[
           new Tab(
               icon: new Icon(Icons.music_note, color: Colors.purple),
@@ -46,15 +51,17 @@ class RootPage extends StatelessWidget {
       ),
       // drawer: new MPDrawer(),
       body: new TabBarView(
+        // Tab bar controller created from the main page
         controller: rootIW.controller,
+        // Page list for the tab view
         children: <Widget>[
-          rootIW.isLoading
+          rootIW.isLoading // Showing a progress bar until song data is loading
               ? new Center(child: new CircularProgressIndicator())
               : new Scrollbar(child: new SongListView()),
-          rootIW.isLoading
+          rootIW.isLoading // Showing a progress bar until album data is loading
               ? new Center(child: new CircularProgressIndicator())
               : new Scrollbar(child: new AlbumList()),
-          rootIW.isLoading
+          rootIW.isLoading // Showing a progress bar until playlist data is loading
               ? new Center(child: new CircularProgressIndicator())
               : new Scrollbar(child: new PlaylistList())
         ],
