@@ -3,6 +3,10 @@
 //Data base provider to initiate the sqflite database connection and perform
 // data base functionalities.
 
+
+
+import 'package:mu_player/models/Fav_model.dart';
+
 import '../models/Playlist.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -30,8 +34,9 @@ class DataBaseProvider {
         onCreate: (db, version) {
       return db.execute(
         // Raw query for database creation. Using id field as the primary key
-        "CREATE TABLE $TABLE_PLAYLIST($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_NAME TEXT, $COLUMN_SONGS String)",
+        "CREATE TABLE $TABLE_PLAYLIST($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_NAME TEXT, $COLUMN_SONGS String)" ,
       );
+
     }, version: 1); // Database version = 1 for the 1.0v of the Mu Player
   }
 
